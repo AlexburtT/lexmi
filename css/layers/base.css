@@ -11,31 +11,31 @@
 		color-scheme: light dark;
 
 		/* Основной фон страницы, модалей, карточек */
-		--bg: light-dark(
-			var(--surface-base),
+		--bg-color: light-dark(
+			var(--lx-color-surface),
 			oklch(
-				from var(--surface-base) clamp(calc(1 - l), 0.1, 0.15)
+				from var(--lx-color-surface) clamp(calc(1 - l), 0.1, 0.15)
 					calc(c * 0.9) h
 			)
 		);
 
 		/* Фон таблиц, инпутов, подложек, чередующихся строк */
 		--bg-secondary: light-dark(
-			oklch(from var(--surface-base) calc(l - 0.035) c h),
+			oklch(from var(---lx-color-surface) calc(l - 0.035) c h),
 			oklch(
-				from var(--surface-base) clamp(calc(1 - l + 0.07), 0.17, 0.23)
-					calc(c * 0.9) h
+				from var(--lx-color-surface)
+					clamp(calc(1 - l + 0.07), 0.17, 0.23) calc(c * 0.9) h
 			)
 		);
 
 		/* Основной текст — достаточно тёмный для WCAG AA на --bg */
 		--text: light-dark(
 			oklch(
-				from var(--surface-base) clamp(calc(l - 0.72), 0.18, 0.26)
+				from var(--lx-color-surface) clamp(calc(l - 0.72), 0.18, 0.26)
 					calc(c * 2) h
 			),
 			oklch(
-				from var(--surface-base) clamp(calc(l + 0.68), 0.82, 0.91)
+				from var(--lx-color-surface) clamp(calc(l + 0.68), 0.82, 0.91)
 					calc(c * 1.2) h
 			)
 		);
@@ -43,154 +43,40 @@
 		/* Заголовки, акцентный текст — темнее/светлее --text */
 		--text-h: light-dark(
 			oklch(
-				from var(--surface-base) clamp(calc(l - 0.82), 0.08, 0.15)
+				from var(--lx-color-surface) clamp(calc(l - 0.82), 0.08, 0.15)
 					calc(c * 2.5) h
 			),
 			oklch(
-				from var(--surface-base) clamp(calc(l + 0.8), 0.92, 0.98)
+				from var(--lx-color-surface) clamp(calc(l + 0.8), 0.92, 0.98)
 					calc(c * 0.8) h
 			)
 		);
 
 		/* Видимые рамки: input, card, table — H от surface даёт «тонированный» бордер */
 		--border: light-dark(
-			oklch(from var(--surface-base) calc(l - 0.13) calc(c * 2.5) h),
+			oklch(from var(--lx-color-surface) calc(l - 0.13) calc(c * 2.5) h),
 			oklch(
-				from var(--surface-base) clamp(calc(1 - l + 0.13), 0.25, 0.35)
-					calc(c * 2) h
+				from var(--lx-color-surface)
+					clamp(calc(1 - l + 0.13), 0.25, 0.35) calc(c * 2) h
 			)
 		);
 
 		/* Тонкие разделители — менее заметны чем border */
 		--divider: light-dark(
-			oklch(from var(--surface-base) calc(l - 0.08) calc(c * 2) h),
+			oklch(from var(--lx-color-surface) calc(l - 0.08) calc(c * 2) h),
 			oklch(
-				from var(--surface-base) clamp(calc(1 - l + 0.18), 0.28, 0.38)
-					calc(c * 1.8) h
+				from var(--lx-color-surface)
+					clamp(calc(1 - l + 0.18), 0.28, 0.38) calc(c * 1.8) h
 			)
 		);
 
 		/* Неактивные элементы, placeholder, скроллбар */
 		--disabled: light-dark(
-			oklch(from var(--surface-base) calc(l - 0.38) calc(c * 1.5) h),
+			oklch(from var(--lx-color-surface) calc(l - 0.38) calc(c * 1.5) h),
 			oklch(
-				from var(--surface-base) clamp(calc(1 - l - 0.15), 0.35, 0.45)
-					calc(c * 1.2) h
+				from var(--lx-color-surface)
+					clamp(calc(1 - l - 0.15), 0.35, 0.45) calc(c * 1.2) h
 			)
-		);
-
-		/* ═══════════════════════════════════════════════════════════════════
-		   АКЦЕНТНАЯ ПАЛИТРА — вычисляется из --accent-base
-		   ───────────────────────────────────────────────────────────────────
-		   oklch(from ...)  → hover, dark-mode  (chroma сохраняется/растёт)
-		   color-mix(...)   → muted, border     (chroma уменьшается, пастель)
-
-		   Состояния:
-		     --accent        → normal (кнопка в покое)
-		     --accent-hover  → l + 0.08 (подсветка при наведении)
-		     --accent-active → l - 0.06 (нажатие)
-		     --accent-muted  → разбавлен фоном до 12% (chip, tag, badge)
-		     --accent-border → разбавлен до 30% (рамка chip/tag)
-		     --accent-fg     → текст/иконка ПОВЕРХ кнопки с --accent фоном
-		   ═══════════════════════════════════════════════════════════════════ */
-
-		/* Основной акцент. Dark: светлее и чуть насыщеннее для контраста на тёмном фоне */
-		--accent: light-dark(
-			var(--accent-base),
-			oklch(
-				from var(--accent-base) clamp(calc(l + 0.18), 0.5, 0.8)
-					clamp(calc(c * 1.3), 0, 0.22) h
-			)
-		);
-
-		/* Hover состояние — l немного вверх, chroma неизменна */
-		--accent-hover: oklch(from var(--accent) calc(l + 0.08) c h);
-
-		/* Active / pressed состояние — l вниз, chroma чуть усилена */
-		--accent-active: oklch(
-			from var(--accent) calc(l - 0.06) calc(c * 1.1) h
-		);
-
-		/* Muted фон для chip/tag/badge/::selection */
-		--accent-muted: color-mix(in oklch, var(--accent) 12%, var(--bg));
-
-		/* Рамка chip/tag, hover рамка карточки */
-		--accent-border: color-mix(in oklch, var(--accent) 30%, var(--bg));
-
-		/* Текст/иконка поверх акцентного фона кнопки.
-		   Логика: при dark mode акцент осветляется до L 0.5–0.8 →
-		   тёмный текст читаем. В light mode акцент обычно L 0.4–0.6 →
-		   белый читаем. color-contrast() решит это нативно когда придёт в стандарт.
-		   Пока: light → белый (работает для рекомендованного диапазона L 0.4–0.62),
-		          dark  → тёмный текст поверх осветлённого акцента. */
-		--accent-fg: light-dark(
-			oklch(1 0 0),
-			oklch(
-				from var(--accent) clamp(calc(l - 0.55), 0.05, 0.2)
-					calc(c * 0.3) h
-			)
-		);
-
-		/* ═══════════════════════════════════════════════════════════════════
-		   СЕМАНТИЧЕСКИЕ ЦВЕТА
-		   ───────────────────────────────────────────────────────────────────
-		   Hue зафиксирован: 20 = красный, 145 = зелёный, 99 = жёлтый.
-		   Это культурная конвенция (светофор, кровь, природа) — не меняй H
-		   без веской причины (±15° допустимо для брендовой адаптации).
-		   L и C адаптируются под dark mode аналогично акценту.
-		   ═══════════════════════════════════════════════════════════════════ */
-
-		/* ─── DANGER — ошибки, деструктивные действия ───
-		   Используй: border invalid-инпута, фон error toast, текст ошибки,
-		              кнопка «Удалить» / «Выход» без возврата */
-		--danger: light-dark(
-			var(--danger-base),
-			oklch(
-				from var(--danger-base) clamp(calc(l + 0.18), 0.5, 0.8)
-					clamp(calc(c * 1.2), 0, 0.22) h
-			)
-		);
-		/* Фон error-сообщения, banner, toast */
-		--danger-muted: color-mix(in oklch, var(--danger) 12%, var(--bg));
-		/* Рамка error input, error card */
-		--danger-border: color-mix(in oklch, var(--danger) 30%, var(--bg));
-		/* Hover состояние кнопки-опасности */
-		--danger-hover: oklch(from var(--danger) calc(l + 0.08) c h);
-		/* Active/pressed */
-		--danger-active: oklch(
-			from var(--danger) calc(l - 0.06) calc(c * 1.1) h
-		);
-
-		/* ─── SUCCESS — успех, подтверждение, online-статус ───
-		   Используй: border valid-инпута, иконка галочки, success toast,
-		              status badge «Активен» / «Оплачено» */
-		--success: light-dark(
-			var(--success-base),
-			oklch(
-				from var(--success-base) clamp(calc(l + 0.18), 0.5, 0.8)
-					clamp(calc(c * 1.2), 0, 0.22) h
-			)
-		);
-		--success-muted: color-mix(in oklch, var(--success) 12%, var(--bg));
-		--success-border: color-mix(in oklch, var(--success) 30%, var(--bg));
-		--success-hover: oklch(from var(--success) calc(l + 0.08) c h);
-
-		/* ─── WARNING — предупреждения, внимание ───
-		   Используй: banner «Не забудь подтвердить email», rate limit notice,
-		              бейдж «Beta» / «Устарело»
-		   Уникальность: нужен и bg, и text (жёлтый фон + тёмный текст) */
-		--warning-bg: light-dark(
-			color-mix(in oklch, var(--warning-base) 20%, var(--bg)),
-			color-mix(in oklch, var(--warning-base) 15%, var(--bg))
-		);
-		/* Текст поверх --warning-bg. Тёмный в light, светлый в dark */
-		--warning-text: light-dark(
-			color-mix(in oklch, var(--warning-base) 50%, oklch(0 0 0)),
-			color-mix(in oklch, var(--warning-base) 80%, oklch(1 0 0))
-		);
-		--warning-border: light-dark(
-			color-mix(in oklch, var(--warning-base) 35%, var(--bg)),
-			color-mix(in oklch, var(--warning-base) 28%, var(--bg))
 		);
 
 		/* Spacing & sizing */
@@ -201,7 +87,7 @@
 	/* Selection */
 	::selection {
 		background: var(--accent-muted);
-		color: var(--text-1);
+		color: var(--text);
 	}
 
 	/* Scroll margin for anchors */
@@ -226,7 +112,7 @@
 	body {
 		font: clamp(1rem, 1vw + 0.55rem, 1.125rem) / 145% var(--sans);
 		color: var(--text);
-		background: var(--bg);
+		background: var(--bg-color);
 		padding-inline: env(safe-area-inset-left, 0)
 			env(safe-area-inset-right, 0);
 		padding-bottom: env(safe-area-inset-bottom, 0);
@@ -239,7 +125,7 @@
 	h1,
 	h2 {
 		font-family: var(--sans);
-		font-weight: 500;
+		font-weight: 600;
 		line-height: 1.2;
 		color: var(--text-h);
 	}
@@ -280,13 +166,5 @@
 	.header,
 	.footer {
 		padding: var(--space);
-	}
-
-	.header {
-		border-bottom: 1px solid var(--border);
-	}
-
-	.footer {
-		border-top: 1px solid var(--border);
 	}
 }

@@ -1,9 +1,21 @@
 @import "/css/layers/index.css";
 
-/*body {
+body {
 	min-height: 100dvh;
 	display: flex;
 	flex-direction: column;
 	width: min(100%, 75rem);
 	margin-inline: auto;
-}*/
+}
+
+main {
+	flex: 1;
+}
+
+.header {
+	border-bottom: 1px solid var(--border);
+}
+
+.footer {
+	border-top: 1px solid var(--border);
+}
