@@ -1,0 +1,118 @@
+/* ==========================================================================
+   @layer reset — нормализация браузерных дефолтов
+   ========================================================================== */
+
+@layer reset {
+	/* Box Model */
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+
+	/* ─── Margin / Padding ───
+           :where() specificity = 0 — легко перекрыть.
+           Исключения: dialog, summary, details — у них есть полезный дефолтный margin. */
+	:where(:not(dialog, summary, details)) {
+		margin: 0;
+		padding: 0;
+	}
+
+	/* Lists */
+	:where(ul, ol) {
+		list-style: none;
+	}
+
+	/* ─── Типографика — балансировка заголовков ─── */
+	:where(h1, h2, h3, h4, h5, h6, blockquote) {
+		text-wrap: balance;
+	}
+
+	:where(p, li, dd, figcaption) {
+		text-wrap: pretty; /* лучше чем balance для длинных абзацев */
+	}
+
+	/* ─── Forms — унификация ─── */
+	:where(
+		button,
+		input:not(
+			[type="checkbox"],
+			[type="radio"],
+			[type="range"],
+			[type="file"],
+			[type="color"]
+		),
+		textarea,
+		select
+	) {
+		font: inherit;
+		line-height: inherit;
+		color: inherit;
+		background: none;
+		border: none;
+		appearance: none;
+		border-radius: 0;
+	}
+
+	/* Native form controls in theme color */
+	:where(
+		input[type="checkbox"],
+		input[type="radio"],
+		input[type="range"],
+		progress
+	) {
+		accent-color: var(--accent-base); /* Используем base, а не --accent! */
+	}
+
+	/* ─── Медиа — адаптивные по умолчанию ─── */
+	:where(img, picture, video, canvas, svg) {
+		display: block;
+		max-width: 100%;
+	}
+
+	/* ─── overflow-wrap — защита от длинных слов / URL
+           Без этого строка вроде «aaaa...aaa» ломает layout. */
+	body {
+		overflow-wrap: break-word;
+	}
+
+	/* ─── tab-size ─── */
+	:where(pre, code) {
+		tab-size: 2;
+	}
+
+	/* ─── scroll-behavior — плавная прокрутка к якорям
+           Уважаем prefers-reduced-motion: при включённом — без анимации. */
+	@media (prefers-reduced-motion: no-preference) {
+		html {
+			scroll-behavior: smooth;
+		}
+	}
+
+	/* ─── Windows High Contrast Mode (~4% пользователей Windows) ─── */
+	@media (forced-colors: active) {
+		*,
+		*::before,
+		*::after {
+			forced-color-adjust: auto;
+		}
+	}
+
+	/* ─── prefers-reduced-transparency
+		   здесь потом сравнить с ним и без, может и убрать вовсе ─── */
+	@media (prefers-reduced-transparency: reduce) {
+		*,
+		*::before,
+		*::after {
+			--shadow-1: none;
+			--shadow-2: none;
+			--shadow-3: none;
+			--shadow-4: none;
+			--shadow-accent: none;
+			--shadow-danger: none;
+			--shadow-accent-glow: none;
+			--shadow-danger-glow: none;
+			--shadow-success-glow: none;
+		}
+	}
+}
