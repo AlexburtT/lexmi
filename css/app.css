@@ -8,8 +8,12 @@ body {
 	margin-inline: auto;
 }
 
-main {
+.main {
 	flex: 1;
+}
+
+.main-title {
+	color: var(--lx-color-primary);
 }
 
 .header {
