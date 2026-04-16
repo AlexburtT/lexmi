@@ -8,20 +8,37 @@ body {
 	margin-inline: auto;
 	color: var(--text);
 	background:
-  /* 1. Акцент (верхний левый) — мягкое свечение */
+  /* Верхний левый */
 		radial-gradient(
 			circle at top left,
-			/* Смешиваем с canvas, чтобы получить чистый тон фона, а не грязь */
-			color-mix(in oklch, var(--accent) 15%, canvas) 0%,
-			transparent 50%
+			color-mix(in oklch, var(--accent) 20%, canvas) 0%,
+			transparent 35%
 		),
-		/* 2. Успех (нижний правый) — едва заметный намёк */
+		/* Нижний правый */
 		radial-gradient(
 				circle at bottom right,
-				color-mix(in oklch, var(--lx-color-success) 10%, canvas) 0%,
-				transparent 45%
+				color-mix(in oklch, var(--lx-color-success) 25%, canvas) 0%,
+				transparent 30%
 			),
-		/* 3. Базовый фон */ var(--bg-color);
+		var(--bg-color);
+
+	/* Увеличиваем фон для анимации */
+	background-size: 120% 120%;
+	background-position: 0% 0%;
+
+	/* Анимация "дыхания" */
+	animation: wave-breathe 15s infinite ease-in-out;
+}
+
+/* Анимация 1: Пульсация масштаба (эффект "дыхания") */
+@keyframes wave-breathe {
+	0%,
+	100% {
+		background-size: 120% 120%;
+	}
+	50% {
+		background-size: 135% 135%; /* Увеличиваем на 15% */
+	}
 }
 
 .main {
