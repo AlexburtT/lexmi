@@ -10,46 +10,36 @@
 
 		color-scheme: light dark;
 
-		/* Основной фон страницы, модалей, карточек */
+		color-scheme: light dark;
+
+		/* ─── Фоны ─── */
 		--bg-color: light-dark(
 			var(--lx-color-surface),
-			oklch(
-				from var(--lx-color-surface) clamp(calc(1 - l), 0.1, 0.15)
-					calc(c * 0.9) h
-			)
+			color-mix(in oklch, var(--lx-color-surface) 12%, black)
 		);
 
-		/* Фон таблиц, инпутов, подложек, чередующихся строк */
 		--bg-secondary: light-dark(
-			oklch(from var(---lx-color-surface) calc(l - 0.035) c h),
-			oklch(
-				from var(--lx-color-surface)
-					clamp(calc(1 - l + 0.07), 0.17, 0.23) calc(c * 0.9) h
-			)
+			color-mix(in oklch, var(--lx-color-surface) 90%, black),
+			color-mix(in oklch, var(--bg-color) 80%, white)
 		);
 
-		/* Основной текст — достаточно тёмный для WCAG AA на --bg */
+		/* ─── Текст ─── */
+		/* Основной: контраст ≥ 4.5:1 (WCAG AA) */
 		--text: light-dark(
-			oklch(
-				from var(--lx-color-surface) clamp(calc(l - 0.72), 0.18, 0.26)
-					calc(c * 2) h
-			),
-			oklch(
-				from var(--lx-color-surface) clamp(calc(l + 0.68), 0.82, 0.91)
-					calc(c * 1.2) h
-			)
+			color-mix(in oklch, var(--lx-color-surface) 35%, black),
+			color-mix(in oklch, var(--bg-color) 5%, white)
 		);
 
-		/* Заголовки, акцентный текст — темнее/светлее --text */
+		/* Заголовки: контраст ≥ 7:1 (WCAG AAA) */
 		--text-h: light-dark(
-			oklch(
-				from var(--lx-color-surface) clamp(calc(l - 0.82), 0.08, 0.15)
-					calc(c * 2.5) h
-			),
-			oklch(
-				from var(--lx-color-surface) clamp(calc(l + 0.8), 0.92, 0.98)
-					calc(c * 0.8) h
-			)
+			color-mix(in oklch, var(--lx-color-surface) 15%, black),
+			color-mix(in oklch, var(--bg-color) 5%, white)
+		);
+
+		/* Вторичный (твоя строка про домен): контраст ≥ 4.5:1, мягкий серый */
+		--text-s: light-dark(
+			color-mix(in oklch, var(--lx-color-surface) 55%, black),
+			color-mix(in oklch, var(--bg-color) 30%, white)
 		);
 
 		/* Видимые рамки: input, card, table — H от surface даёт «тонированный» бордер */
@@ -122,7 +112,7 @@
 	}
 
 	main {
-		padding-left: var(--space);
+		padding: var(--space);
 	}
 
 	/* Typography */

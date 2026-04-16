@@ -2,18 +2,33 @@
 
 body {
 	min-height: 100dvh;
-	display: flex;
-	flex-direction: column;
+	display: grid;
+	grid-template-rows: auto 1fr auto;
 	width: min(100%, 75rem);
 	margin-inline: auto;
 }
 
 .main {
-	flex: 1;
-}
+	display: grid;
+	align-content: center;
 
-.main-title {
-	color: var(--lx-color-primary);
+	.breadcrumbs span {
+		color: var(--text-s);
+	}
+
+	.main-title {
+		color: var(--lx-color-primary);
+		text-align: center;
+	}
+
+	p {
+		text-align: right;
+		color: var(--text-s);
+
+		strong {
+			color: var(--text);
+		}
+	}
 }
 
 .header {

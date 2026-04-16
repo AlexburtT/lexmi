@@ -61,7 +61,9 @@
 		input[type="range"],
 		progress
 	) {
-		accent-color: var(--accent-base); /* Используем base, а не --accent! */
+		accent-color: var(
+			--lx-color-primary
+		); /* Используем base, а не --accent! */
 	}
 
 	/* ─── Медиа — адаптивные по умолчанию ─── */
