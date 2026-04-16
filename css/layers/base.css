@@ -10,38 +10,71 @@
 
 		color-scheme: light dark;
 
-		color-scheme: light dark;
-
 		/* ─── Фоны ─── */
 		--bg-color: light-dark(
 			var(--lx-color-surface),
-			color-mix(in oklch, var(--lx-color-surface) 12%, black)
+			oklch(from var(--lx-color-surface) clamp(0.12, l - 0.75, 0.2) c h)
 		);
 
 		--bg-secondary: light-dark(
-			color-mix(in oklch, var(--lx-color-surface) 90%, black),
-			color-mix(in oklch, var(--bg-color) 80%, white)
+			oklch(from var(--lx-color-surface) clamp(0.88, l - 0.08, 0.94) c h),
+			oklch(from var(--bg-color) clamp(0.2, l + 0.1, 0.3) c h)
 		);
 
-		/* ─── Текст ─── */
-		/* Основной: контраст ≥ 4.5:1 (WCAG AA) */
+		/* ─── Текст: УВЕЛИЧЕННЫЕ ДЕЛЬТЫ для гарантии контраста ─── */
+
+		/* Основной: WCAG AA (4.5:1)
+       Светлая: L ≤ 0.38, Тёмная: L ≥ 0.75 */
 		--text: light-dark(
-			color-mix(in oklch, var(--lx-color-surface) 35%, black),
-			color-mix(in oklch, var(--bg-color) 5%, white)
+			oklch(
+				from var(--lx-color-surface) clamp(0.18, l - 0.6, 0.38)
+					/* Увеличено с 0.52 до 0.60 */ calc(c * 0.4) h
+			),
+			oklch(
+				from var(--lx-color-surface) clamp(0.75, l + 0.6, 0.9)
+					/* Увеличено с 0.52 до 0.60 */ calc(c * 0.35) h
+			)
 		);
 
-		/* Заголовки: контраст ≥ 7:1 (WCAG AAA) */
+		/* Заголовки: WCAG AAA (7:1)
+       Светлая: L ≤ 0.28, Тёмная: L ≥ 0.88 */
 		--text-h: light-dark(
-			color-mix(in oklch, var(--lx-color-surface) 15%, black),
-			color-mix(in oklch, var(--bg-color) 5%, white)
+			oklch(
+				from var(--lx-color-surface) clamp(0.08, l - 0.7, 0.28)
+					/* Увеличено с 0.72 до 0.70, но нижняя граница 0.08 */
+					calc(c * 0.6) h
+			),
+			oklch(
+				from var(--lx-color-surface) clamp(0.88, l + 0.75, 0.98)
+					/* Увеличено с 0.72 до 0.75 */ calc(c * 0.25) h
+			)
 		);
 
-		/* Вторичный (твоя строка про домен): контраст ≥ 4.5:1, мягкий серый */
+		/* Вторичный: WCAG AA (4.5:1), но визуально мягче
+       Светлая: L ≈ 0.50-0.60, Тёмная: L ≈ 0.65-0.75 */
 		--text-s: light-dark(
-			color-mix(in oklch, var(--lx-color-surface) 55%, black),
-			color-mix(in oklch, var(--bg-color) 30%, white)
+			oklch(
+				from var(--lx-color-surface) clamp(0.45, l - 0.42, 0.6)
+					/* Увеличено с 0.38 до 0.42 */ calc(c * 0.3) h
+			),
+			oklch(
+				from var(--lx-color-surface) clamp(0.65, l + 0.5, 0.75)
+					/* Увеличено с 0.38 до 0.50 */ calc(c * 0.25) h
+			)
 		);
 
+		--accent: light-dark(
+			/* Светлая: чуть темнее + буст хроматичности для чёткости на светлом фоне */
+				oklch(
+					from var(--lx-color-primary) clamp(0.38, l - 0.12, 0.48)
+						calc(c * 1.1) h
+				),
+			/* Тёмная: светлее + мягкое снижение хроматичности против "гало-эффекта" */
+				oklch(
+					from var(--lx-color-primary) clamp(0.65, l + 0.18, 0.75)
+						calc(c * 0.9) h
+				)
+		);
 		/* Видимые рамки: input, card, table — H от surface даёт «тонированный» бордер */
 		--border: light-dark(
 			oklch(from var(--lx-color-surface) calc(l - 0.13) calc(c * 2.5) h),
@@ -98,11 +131,15 @@
 		hyphens: auto;
 	}
 
+	html {
+		color: var(--text);
+		background: var(--bg-color);
+	}
+
 	/* BODY — Mobile-first layout */
 	body {
 		font: clamp(1rem, 1vw + 0.55rem, 1.125rem) / 145% var(--sans);
-		color: var(--text);
-		background: var(--bg-color);
+
 		padding-inline: env(safe-area-inset-left, 0)
 			env(safe-area-inset-right, 0);
 		padding-bottom: env(safe-area-inset-bottom, 0);
@@ -121,7 +158,6 @@
 		font-family: var(--sans);
 		font-weight: 600;
 		line-height: 1.2;
-		color: var(--text-h);
 	}
 
 	h1 {
