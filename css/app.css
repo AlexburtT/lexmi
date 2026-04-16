@@ -6,6 +6,22 @@ body {
 	grid-template-rows: auto 1fr auto;
 	width: min(100%, 75rem);
 	margin-inline: auto;
+	color: var(--text);
+	background:
+  /* 1. Акцент (верхний левый) — мягкое свечение */
+		radial-gradient(
+			circle at top left,
+			/* Смешиваем с canvas, чтобы получить чистый тон фона, а не грязь */
+			color-mix(in oklch, var(--accent) 15%, canvas) 0%,
+			transparent 50%
+		),
+		/* 2. Успех (нижний правый) — едва заметный намёк */
+		radial-gradient(
+				circle at bottom right,
+				color-mix(in oklch, var(--lx-color-success) 10%, canvas) 0%,
+				transparent 45%
+			),
+		/* 3. Базовый фон */ var(--bg-color);
 }
 
 .main {

@@ -131,15 +131,9 @@
 		hyphens: auto;
 	}
 
-	html {
-		color: var(--text);
-		background: var(--bg-color);
-	}
-
 	/* BODY — Mobile-first layout */
 	body {
 		font: clamp(1rem, 1vw + 0.55rem, 1.125rem) / 145% var(--sans);
-
 		padding-inline: env(safe-area-inset-left, 0)
 			env(safe-area-inset-right, 0);
 		padding-bottom: env(safe-area-inset-bottom, 0);
