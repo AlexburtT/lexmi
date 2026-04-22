@@ -31,7 +31,7 @@
 			--shadow-success-glow: none;
 		}
 		html {
-			scroll-behavior: auto; /* Явный сброс, если выше был smooth */
+			scroll-behavior: auto;
 		}
 		*,
 		*::before,
@@ -47,12 +47,5 @@
 		html {
 			scroll-behavior: smooth;
 		}
-	}
-
-	/* ─── High Contrast / Forced Colors ─── */
-	@media (forced-colors: active) {
-		/* Глобальный forced-color-adjust: auto — не нужен (это дефолт).
-       Используйте forced-color-adjust: preserve только на элементах,
-       которые должны сохранять кастомные цвета в WHCM. */
 	}
 }
