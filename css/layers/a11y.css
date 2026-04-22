@@ -1,0 +1,58 @@
+@layer a11y {
+	/* ─── Уменьшение прозрачности (iOS/macOS) ─── */
+	@media (prefers-reduced-transparency: reduce) {
+		:root {
+			--shadow-1: none;
+			--shadow-2: none;
+			--shadow-3: none;
+			--shadow-4: none;
+			--shadow-accent: none;
+			--shadow-danger: none;
+			--shadow-accent-glow: none;
+			--shadow-danger-glow: none;
+			--shadow-success-glow: none;
+			--backdrop-blur-sm: none;
+			--backdrop-blur-md: none;
+		}
+	}
+
+	/* ─── Уменьшение анимаций (кросс-браузер) ─── */
+	@media (prefers-reduced-motion: reduce) {
+		:root {
+			/* Тени/блюры тоже отключаем, т.к. часто воспринимаются как motion */
+			--shadow-1: none;
+			--shadow-2: none;
+			--shadow-3: none;
+			--shadow-4: none;
+			--shadow-accent: none;
+			--shadow-danger: none;
+			--shadow-accent-glow: none;
+			--shadow-danger-glow: none;
+			--shadow-success-glow: none;
+		}
+		html {
+			scroll-behavior: auto; /* Явный сброс, если выше был smooth */
+		}
+		*,
+		*::before,
+		*::after {
+			animation-duration: 0.01ms !important;
+			animation-iteration-count: 1 !important;
+			transition-duration: 0.01ms !important;
+		}
+	}
+
+	/* ─── Плавная прокрутка (только если motion разрешён) ─── */
+	@media (prefers-reduced-motion: no-preference) {
+		html {
+			scroll-behavior: smooth;
+		}
+	}
+
+	/* ─── High Contrast / Forced Colors ─── */
+	@media (forced-colors: active) {
+		/* Глобальный forced-color-adjust: auto — не нужен (это дефолт).
+       Используйте forced-color-adjust: preserve только на элементах,
+       которые должны сохранять кастомные цвета в WHCM. */
+	}
+}

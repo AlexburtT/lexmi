@@ -82,39 +82,4 @@
 	:where(pre, code) {
 		tab-size: 2;
 	}
-
-	/* ─── scroll-behavior — плавная прокрутка к якорям
-           Уважаем prefers-reduced-motion: при включённом — без анимации. */
-	@media (prefers-reduced-motion: no-preference) {
-		html {
-			scroll-behavior: smooth;
-		}
-	}
-
-	/* ─── Windows High Contrast Mode (~4% пользователей Windows) ─── */
-	@media (forced-colors: active) {
-		*,
-		*::before,
-		*::after {
-			forced-color-adjust: auto;
-		}
-	}
-
-	/* ─── prefers-reduced-transparency
-		   здесь потом сравнить с ним и без, может и убрать вовсе ─── */
-	@media (prefers-reduced-transparency: reduce) {
-		*,
-		*::before,
-		*::after {
-			--shadow-1: none;
-			--shadow-2: none;
-			--shadow-3: none;
-			--shadow-4: none;
-			--shadow-accent: none;
-			--shadow-danger: none;
-			--shadow-accent-glow: none;
-			--shadow-danger-glow: none;
-			--shadow-success-glow: none;
-		}
-	}
 }
